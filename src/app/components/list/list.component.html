@@ -1,0 +1,61 @@
+<div class="cards">
+  <div class="card" *ngFor="let t of tickets; index as i">
+    <header class="card-header"> <!-- is-centered -->
+      <div class="card-header-title">
+        {{ t.title }}
+      </div>
+
+    </header>
+    <div class="card-content">
+      <div class="content">
+        <!-- {{ t.description }} -->
+        {{ (t.description.length>150) ?
+          (t.description | slice:0:150)+'...' :
+          (t.description)
+        }}
+        <span *ngIf="t.description.length>150">
+          <a (click)="update = false; find(t._id); modalActive = true">More</a>
+        </span>
+        <br><br>
+        <div class="tags">
+          <span class="tag is-info is-medium"> {{ t.department }}</span>
+          <span
+            class="tag is-medium"
+            [class.is-warning]="t.status === 'Open'"
+            [class.is-light]="t.status === 'On Hold'"
+            [class.is-black]="t.status === 'Closed'"
+          > {{ t.status }}</span>
+          <span
+            *ngIf="t.comments.length > 0"
+            class="icon is-medium"
+            (click)="update = false; find(t._id); modalActive = true"
+          >
+            <i class="fas fa-comment fa-2x"></i>
+          </span>
+        </div>
+        <div>
+          <div class="help">
+            Created: <time>{{ t.dateCreated | date:'E, MMM d, y - h:mma' }}</time>
+          </div>
+          <div class="help" *ngIf="t.dateCreated !== t.lastModified">
+            Modified: <time>{{ t.lastModified | date:'E, MMM d, y - h:mma' }}</time>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="card-footer">
+      <a (click)="update = false; find(t._id); modalActive = true" class="card-footer-item">Comment</a>
+      <a (click)="update = true; find(t._id)" class="card-footer-item">Edit</a>
+      <a (click)="delete(t._id, i)" class="card-footer-item">Delete</a>
+    </footer>
+  </div>
+</div>
+
+<div class="modal" [class.is-active]="modalActive">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <app-update *ngIf="update" [ticket]="ticket"></app-update>
+    <app-comments *ngIf="!update" [ticket]="ticket"></app-comments>
+  </div>
+  <button class="modal-close is-large" aria-label="close" (click)="modalActive = false"></button>
+</div>

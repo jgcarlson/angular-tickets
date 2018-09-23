@@ -1,0 +1,14 @@
+h1 {
+  margin: 1vh 2vw;
+}
+.app-container {
+  margin: 5vh 5vw;
+}
+a {
+  color: white;
+  text-shadow: 0 0 3.125rem rgba(0, 0, 0, 0.18);
+  .navbar-item > & {
+    color: black;
+    // margin-left: 90%;
+  }
+}

@@ -1,0 +1,21 @@
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  // justify-content: flex-start;
+}
+
+.card {
+  margin: 10px;
+  width: calc(33% - 20px);
+  height: max-content;;
+}
+
+.card-header-status {
+  margin-top: 3%;
+}
+.card-footer {
+  margin-top: auto;
+}
+.icon {
+  margin-bottom: 8px;
+}

@@ -1,0 +1,31 @@
+<nav class="navbar is-link" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a routerLink="/">
+      <h1 class="is-size-4">Angular Tickets</h1>
+    </a>
+    <a
+      (click)="menuActive = !menuActive"
+      [class.is-active]="menuActive"
+      role="button"
+      class="navbar-burger"
+      aria-label="menu"
+      aria-expanded="false"
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div *ngIf="router.url !== '/new'" class="navbar-menu" [class.is-active]="menuActive">
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <span class="tag is-dark is-medium is-rounded">
+          <a routerLink="/new" (click)="menuActive = !menuActive">+ New</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="app-container">
+  <router-outlet></router-outlet>
+</div>

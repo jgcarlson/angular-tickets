@@ -1,0 +1,83 @@
+<div class="card">
+  <header class="card-header"> <!-- is-centered -->
+    <div class="card-header-title">
+      {{ ticket.title }}
+    </div>
+
+  </header>
+  <div class="card-content">
+    <div class="content">
+      {{ ticket.description }}
+      <br><br>
+      <div class="tags">
+        <span class="tag is-info is-medium"> {{ ticket.department }}</span>
+        <span
+          class="tag is-medium"
+          [class.is-warning]="ticket.status === 'Open'"
+          [class.is-light]="ticket.status === 'On Hold'"
+          [class.is-black]="ticket.status === 'Closed'"
+        > {{ ticket.status }}</span>
+      </div>
+      <div>
+        <div class="help">
+          Created: <time>{{ ticket.dateCreated | date:'E, MMM d, y - h:mma' }}</time>
+        </div>
+        <div class="help" *ngIf="ticket.dateCreated !== ticket.lastModified">
+          Modified: <time>{{ ticket.lastModified | date:'E, MMM d, y - h:mma' }}</time>
+        </div>
+      </div>
+    </div>
+    <app-comment *ngFor="let comment of ticket.comments" [comment]="comment"></app-comment>
+    <hr />
+    <div [formGroup]="commentForm">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Comment</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <textarea
+                class="textarea"
+                formControlName="text"
+                [class.is-danger]="commentForm.controls.text.dirty && commentForm.controls.text.invalid"
+              ></textarea>
+              <p
+                class="help is-danger"
+                *ngIf="commentForm.controls.text.dirty && commentForm.controls.text.invalid"
+              >
+                This field is required.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Name</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <input
+                class="input"
+                type="text"
+                formControlName="author"
+                [class.is-danger]="commentForm.controls.author.dirty && commentForm.controls.author.invalid"
+              >
+            </div>
+            <p
+              class="help is-danger"
+              *ngIf="commentForm.controls.author.dirty && commentForm.controls.author.invalid"
+            >
+              This field is required.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="card-footer">
+    <button class="button is-success is-large card-footer-item" type="submit" (click)="submitForm()" [disabled]="!commentForm.valid">Post</button>
+  </footer>
+</div>
